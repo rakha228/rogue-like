@@ -1,0 +1,140 @@
+[gd_scene format=3 uid="uid://bwiao12c8i831"]
+
+[ext_resource type="Script" uid="uid://h6eb3h3pksrl" path="res://scene/game_objects/player/player.gd" id="1_oypl4"]
+[ext_resource type="Texture2D" uid="uid://u3g0g6l6mqri" path="res://scene/game_objects/player/elf_f_hit_anim_f0.png" id="1_pisg7"]
+[ext_resource type="Script" uid="uid://lk7hroiopjhl" path="res://scene/Components/health_component.gd" id="2_bjes5"]
+[ext_resource type="Texture2D" uid="uid://c665c1hesjm3y" path="res://scene/game_objects/player/elf_f_idle_anim_f0.png" id="2_oypl4"]
+[ext_resource type="Texture2D" uid="uid://cqvvwgsxcy2sy" path="res://scene/game_objects/player/elf_f_idle_anim_f1.png" id="3_qjg4s"]
+[ext_resource type="Texture2D" uid="uid://dkikqi1ao5gjj" path="res://scene/game_objects/player/elf_f_idle_anim_f2.png" id="4_1wtbu"]
+[ext_resource type="Texture2D" uid="uid://h4nggwfbyl8a" path="res://scene/game_objects/player/elf_f_idle_anim_f3.png" id="5_p3aiu"]
+[ext_resource type="Texture2D" uid="uid://d4eqg082dex2p" path="res://scene/game_objects/player/elf_f_run_anim_f0.png" id="6_f5r2w"]
+[ext_resource type="Texture2D" uid="uid://cegjkonl4xb7j" path="res://scene/game_objects/player/elf_f_run_anim_f1.png" id="7_oen5c"]
+[ext_resource type="Texture2D" uid="uid://cdkhschv3rc0w" path="res://scene/game_objects/player/elf_f_run_anim_f2.png" id="8_5g408"]
+[ext_resource type="Texture2D" uid="uid://dr0gt27g3nhwo" path="res://scene/game_objects/player/elf_f_run_anim_f3.png" id="9_sc4n2"]
+[ext_resource type="PackedScene" uid="uid://81x8mfxxc57s" path="res://scene/abilities/attack_abillity/attack_contorller.tscn" id="11_qjg4s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjes5"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpv3a"]
+bg_color = Color(1, 0.22745098, 0.32156864, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_heqc5"]
+radius = 23.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bjes5"]
+size = Vector2(9, 12.5)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lrcci"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_pisg7")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_oypl4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_qjg4s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1wtbu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p3aiu")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_f5r2w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_oen5c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_5g408")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sc4n2")
+}],
+"loop": true,
+"name": &"run",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fspl2"]
+radius = 6.0
+
+[node name="player" type="CharacterBody2D" unique_id=1177908135 groups=["player"]]
+collision_layer = 0
+script = ExtResource("1_oypl4")
+
+[node name="AbillityManager" type="Node" parent="." unique_id=1146635558]
+
+[node name="AttackContorller" parent="AbillityManager" unique_id=54856642 instance=ExtResource("11_qjg4s")]
+
+[node name="HealthComponent" type="Node" parent="." unique_id=1824971199]
+script = ExtResource("2_bjes5")
+metadata/_custom_type_script = "uid://lk7hroiopjhl"
+
+[node name="InvincibleFrames" type="Timer" parent="." unique_id=1383391325]
+wait_time = 0.3
+one_shot = true
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1268046052]
+custom_minimum_size = Vector2(27, 2.5)
+offset_left = -14.0
+offset_top = -24.0
+offset_right = 13.0
+offset_bottom = -20.0
+pivot_offset = Vector2(14, 0)
+theme_override_styles/background = SubResource("StyleBoxFlat_bjes5")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fpv3a")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="PickUpArea" type="Area2D" parent="." unique_id=1099216247]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea" unique_id=645767857]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_heqc5")
+
+[node name="PlayerHurtBox" type="Area2D" parent="PickUpArea" unique_id=1573282779]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickUpArea/PlayerHurtBox" unique_id=1432941778]
+position = Vector2(-0.5, -6.75)
+shape = SubResource("RectangleShape2D_bjes5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1767218228]
+position = Vector2(0, -13.5)
+scale = Vector2(1, 0.96428573)
+sprite_frames = SubResource("SpriteFrames_lrcci")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=693222087]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_fspl2")
+
+[connection signal="timeout" from="InvincibleFrames" to="." method="_on_invincible_frames_timeout"]
+[connection signal="area_entered" from="PickUpArea/PlayerHurtBox" to="." method="_on_player_hurt_box_area_entered"]
+[connection signal="area_exited" from="PickUpArea/PlayerHurtBox" to="." method="_on_player_hurt_box_area_exited"]

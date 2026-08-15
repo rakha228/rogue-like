@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://bkb1jskgp244s"]
+
+[ext_resource type="Script" uid="uid://dq8lo358lmm07" path="res://scene/manager/spawner/enemy_spawner.gd" id="1_0jpma"]
+[ext_resource type="PackedScene" uid="uid://cyj7mdvq70gwd" path="res://scene/game_objects/Chort/chort.tscn" id="2_ciet3"]
+
+[node name="EnemySpawner" type="Node" unique_id=698048511]
+script = ExtResource("1_0jpma")
+chort_scene = ExtResource("2_ciet3")
+
+[node name="Timer" type="Timer" parent="." unique_id=2076047191]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://b6jugkis7et8r"]
+
+[ext_resource type="Script" uid="uid://6bjjjtrens60" path="res://scene/UI/end_screen.gd" id="1_iyald"]
+
+[node name="EndScreen" type="CanvasLayer" unique_id=1020589944]
+process_mode = 3
+script = ExtResource("1_iyald")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=806964529]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=1370323604]
+custom_minimum_size = Vector2(300, 170)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=1902076171]
+layout_mode = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=502540522]
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1212967037]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+text = "GAME OVER"
+
+[node name="RestartButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1690256314]
+layout_mode = 2
+text = "RESTART
+"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1189164618]
+layout_mode = 2
+text = "QUIT 
+"
+
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]

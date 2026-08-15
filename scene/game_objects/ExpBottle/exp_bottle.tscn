@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://xvqarr7yswgr"]
+
+[ext_resource type="Texture2D" uid="uid://pmvtq367nj4w" path="res://scene/game_objects/ExpBottle/exp_bottle.png" id="1_e7jr6"]
+[ext_resource type="Script" uid="uid://2qd8gx3yqsnj" path="res://scene/game_objects/ExpBottle/exp_bottle.gd" id="1_f5bke"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e7jr6"]
+radius = 5.0
+height = 14.0
+
+[node name="ExpBottle" type="Node2D" unique_id=129386247]
+script = ExtResource("1_f5bke")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1145162843]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=2036488694]
+shape = SubResource("CapsuleShape2D_e7jr6")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=306147698]
+texture = ExtResource("1_e7jr6")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

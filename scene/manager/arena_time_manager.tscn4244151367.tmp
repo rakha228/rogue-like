@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://kmtdp8pumk6q"]
+
+[ext_resource type="Script" uid="uid://wkjjqsjnapn3" path="res://scene/manager/arena_time_manager.gd" id="1_xur4e"]
+
+[sub_resource type="GDScript" id="GDScript_7onc0"]
+script/source = "extends Timer
+
+ @onready var timer = $Timer
+
+func get_time_elapsed ():
+	return timer.wait_time - timer.time_left
+"
+
+[node name="ArenaTimeManager" type="Node" unique_id=78947883]
+script = ExtResource("1_xur4e")
+
+[node name="Timer" type="Timer" parent="." unique_id=160837004]
+wait_time = 600.0
+one_shot = true
+autostart = true
+script = SubResource("GDScript_7onc0")

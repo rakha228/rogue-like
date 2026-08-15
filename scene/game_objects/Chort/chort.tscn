@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://cyj7mdvq70gwd"]
+
+[ext_resource type="Texture2D" uid="uid://bd4lwfxqiyfe0" path="res://scene/game_objects/Chort/chort_idle_anim_f0.png" id="1_7csqx"]
+[ext_resource type="Script" uid="uid://ddqutgmpg8xmc" path="res://scene/game_objects/Chort/chort.gd" id="1_nmsn6"]
+[ext_resource type="PackedScene" uid="uid://vvqgwq3lfitj" path="res://scene/Components/health_component.tscn" id="2_g00wn"]
+[ext_resource type="PackedScene" uid="uid://bech15hmnjjca" path="res://scene/Components/death_component.tscn" id="2_he40h"]
+[ext_resource type="Texture2D" uid="uid://cthprdxgceii5" path="res://scene/game_objects/Chort/chort_idle_anim_f1.png" id="2_nmsn6"]
+[ext_resource type="PackedScene" uid="uid://54rb34jxnpol" path="res://scene/Components/exp_bottle_drop_component.tscn" id="2_q2m8p"]
+[ext_resource type="Texture2D" uid="uid://dn0jkh0bato57" path="res://scene/game_objects/Chort/chort_idle_anim_f2.png" id="3_7qwwa"]
+[ext_resource type="PackedScene" uid="uid://10jhbfj8dafh" path="res://scene/Components/hurt_box_component.tscn" id="4_lmg6x"]
+[ext_resource type="Texture2D" uid="uid://o23u4ikiffx4" path="res://scene/game_objects/Chort/chort_idle_anim_f3.png" id="4_xgray"]
+[ext_resource type="Texture2D" uid="uid://di58ohay67fc8" path="res://scene/game_objects/Chort/chort_run_anim_f0.png" id="5_at8sx"]
+[ext_resource type="Texture2D" uid="uid://cyoos0cj3w5sg" path="res://scene/game_objects/Chort/chort_run_anim_f1.png" id="6_w2i8q"]
+[ext_resource type="Texture2D" uid="uid://c8y2ngbh2txax" path="res://scene/game_objects/Chort/chort_run_anim_f2.png" id="7_jqxtu"]
+[ext_resource type="Texture2D" uid="uid://byw64f1ykln4e" path="res://scene/game_objects/Chort/chort_run_anim_f3.png" id="8_vijhr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lmg6x"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_govc4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7csqx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_nmsn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7qwwa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_xgray")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_at8sx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_w2i8q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jqxtu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_vijhr")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7qwwa"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_he40h"]
+radius = 4.0
+
+[node name="Chort" type="CharacterBody2D" unique_id=349816271 groups=["enemy"]]
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_nmsn6")
+death_scene = ExtResource("2_he40h")
+sprite = ExtResource("1_7csqx")
+
+[node name="ExpBottleDropComponent" parent="." unique_id=183756115 node_paths=PackedStringArray("health_component") instance=ExtResource("2_q2m8p")]
+health_component = NodePath("../HealthComponent")
+
+[node name="HealthComponent" parent="." unique_id=197598800 instance=ExtResource("2_g00wn")]
+
+[node name="HurtBoxComponent" parent="." unique_id=38135762 node_paths=PackedStringArray("health_component") instance=ExtResource("4_lmg6x")]
+health_component = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent" unique_id=888203017]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_lmg6x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=391335428]
+position = Vector2(0, -11.5)
+sprite_frames = SubResource("SpriteFrames_govc4")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.78951675
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1554394078]
+position = Vector2(-3.5762787e-07, -5.999999)
+rotation = 0.72537076
+shape = SubResource("CircleShape2D_7qwwa")
+
+[node name="EnemyHitBox" type="Area2D" parent="." unique_id=1155971656]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHitBox" unique_id=1544510603]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_he40h")
+
+[connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_area_2d_area_entered"]

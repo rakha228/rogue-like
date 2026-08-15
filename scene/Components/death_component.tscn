@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://bech15hmnjjca"]
+
+[ext_resource type="Script" uid="uid://cspogojjrg4yf" path="res://scene/Components/death_component.gd" id="1_bebds"]
+
+[sub_resource type="Animation" id="Animation_sqn5k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bebds"]
+resource_name = "death"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node2D/GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xsc1m"]
+_data = {
+&"RESET": SubResource("Animation_sqn5k"),
+&"death": SubResource("Animation_bebds")
+}
+
+[sub_resource type="Curve" id="Curve_sqn5k"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5071429, 0.8372606), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_bebds"]
+curve = SubResource("Curve_sqn5k")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bebds"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+spread = 15.0
+initial_velocity_min = 144.56
+initial_velocity_max = 229.01
+angular_velocity_min = -186.87001
+angular_velocity_max = 164.88998
+gravity = Vector3(0, 500, 0)
+alpha_curve = SubResource("CurveTexture_bebds")
+
+[node name="DeathComponent" type="Node2D" unique_id=1258660346]
+script = ExtResource("1_bebds")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2092107068]
+libraries/ = SubResource("AnimationLibrary_xsc1m")
+autoplay = &"death"
+
+[node name="Node2D" type="Node2D" parent="." unique_id=249503395]
+position = Vector2(0, -11.5)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Node2D" unique_id=981057649]
+unique_name_in_owner = true
+emitting = false
+amount = 1
+amount_ratio = 0.8
+one_shot = true
+fixed_fps = 0
+interpolate = false
+process_material = SubResource("ParticleProcessMaterial_bebds")
